@@ -1,0 +1,206 @@
+signup.jsx
+
+
+import React, { useState } from "react";
+import Login from "./Login";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom"; // Import Link for navigation
+
+function Signup() {
+  const [showLogin, setShowLogin] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <>
+      {/* Main Signup Page Content */}
+      <div className="flex h-screen items-center justify-center">
+        <div className="modal-box bg-white p-6 rounded-md shadow-lg relative">
+          <h3 className="font-bold text-lg">Signup!</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Name */}
+            <div className="mt-4 space-y-2">
+              <label>
+                Name
+                <br />
+                <input
+                  type="text"
+                  placeholder="Enter your Full name"
+                  className="w-80 px-3 py-1 border rounded-md outline-none"
+                  {...register("Name", { required: "Name is required" })}
+                />
+                <br />
+                {errors.Name && (
+                  <span className="text-sm text-red-500">{errors.Name.message}</span>
+                )}
+              </label>
+            </div>
+            {/* Email */}
+            <div className="mt-4 space-y-2">
+              <label>
+                Email
+                <br />
+                <input
+                  type="email"
+                  placeholder="Enter your email id"
+                  className="w-80 px-3 py-1 border rounded-md outline-none"
+                  {...register("Email", { required: "Email is required" })}
+                />
+                <br />
+                {errors.Email && (
+                  <span className="text-sm text-red-500">{errors.Email.message}</span>
+                )}
+              </label>
+            </div>
+            {/* Password */}
+            <div className="mt-4 space-y-2">
+              <label>
+                Password
+                <br />
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  className="w-80 px-3 py-1 border rounded-md outline-none"
+                  {...register("Password", { required: "Password is required" })}
+                />
+                <br />
+                {errors.Password && (
+                  <span className="text-sm text-red-500">{errors.Password.message}</span>
+                )}
+              </label>
+            </div>
+            {/* Button */}
+            <div className="flex justify-around mt-4">
+              <button
+                type="submit"
+                className="bg-pink-500 text-white rounded-md px-3 py-1 hover:bg-pink-700 duration-300"
+              >
+                Signup
+              </button>
+
+              <span className="text-xl">
+                Have an account?{" "}
+                <button
+                  className="underline text-blue-500 cursor-pointer"
+                  onClick={() => setShowLogin(true)}
+                >
+                  Login
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      {/* Conditionally Render Login Modal */}
+      {showLogin && <Login closeModal={() => setShowLogin(false)} />}
+    </>
+  );
+}
+
+export default Signup;
+
+
+
+
+
+login.jsx
+
+import React from "react";
+import { useForm } from "react-hook-form";
+
+function Login({ closeModal }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+      onClick={closeModal} // Close modal when clicking outside
+    >
+      <div
+        className="modal-box bg-white p-6 rounded-md shadow-lg relative"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+      >
+        <button
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          onClick={closeModal} // Button to close the modal
+        >
+          ✕
+        </button>
+
+        <h3 className="font-bold text-lg">Login!</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Email */}
+          <div className="mt-4 space-y-2">
+            <label>
+              Email
+              <br />
+              <input
+                type="email"
+                placeholder="Enter your email id"
+                className="w-80 px-3 py-1 border rounded-md outline-none"
+                {...register("Email", { required: "Email is required" })}
+              />
+              <br />
+              {errors.Email && (
+                <span className="text-sm text-red-500">{errors.Email.message}</span>
+              )}
+            </label>
+          </div>
+          {/* Password */}
+          <div className="mt-4 space-y-2">
+            <label>
+              Password
+              <br />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="w-80 px-3 py-1 border rounded-md outline-none"
+                {...register("Password", { required: "Password is required" })}
+              />
+              <br />
+              {errors.Password && (
+                <span className="text-sm text-red-500">{errors.Password.message}</span>
+              )}
+            </label>
+          </div>
+          {/* Button */}
+          <div className="flex justify-around mt-4">
+            <button
+              type="submit"
+              className="bg-pink-500 text-white rounded-md px-3 py-1 hover:bg-pink-700 duration-300"
+            >
+              Login
+            </button>
+            <p>
+              Not registered?{" "}
+              <a
+                href="/Signup"
+                className="underline text-blue-400 cursor-pointer"
+              >
+                Signup
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
+
+
+login.jsx
