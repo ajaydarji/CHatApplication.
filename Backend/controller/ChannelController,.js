@@ -35,7 +35,7 @@ export const createChannel = async (request, response, next) => {
 
 export const getUserChannels = async (req, res) => {
   try {
-    const { userId } = req.query; // Extract userId directly from req.body
+    const { userId } = req.query;
     console.log("Received userID in backend:", userId);
 
     // Validate userId
